@@ -1,15 +1,13 @@
 <?php
 include_once("Fruit.php");
-include_once("Pomme.php");
-include_once("Cerise.php");
 
 
 // Création d'une liste de fruits
 $fruits = [
-    new Pomme(150, 1.5, '/img/pommeverte.jpg'),
-    new Pomme(120, 1.2, '/img/pommerouge.jpg'),
-    new Cerise(50, 2.0, '/img/cerisedouble.jpg'),
-    new Cerise(40, 1.8, '/img/cerisetriple.jpg')
+    new Fruit(Fruit::POMME,150, 1.5, '/img/pommeverte.jpg'),
+    new Fruit(Fruit::POMME,120, 1.2, '/img/pommerouge.jpg'),
+    new Fruit(Fruit::CERISE,50, 2.0, '/img/cerisedouble.jpg'),
+    new Fruit(Fruit::CERISE,40, 1.8, '/img/cerisetriple.jpg')
 
 ];
 
