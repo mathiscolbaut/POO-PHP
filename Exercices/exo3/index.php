@@ -1,31 +1,28 @@
 <?php
 include_once("Panier.php");
-
 include_once("Fruit.php");
 
-
 // Création d'instances de pommes et de cerises
-$pomme1 = new Fruit(Fruit::POMME,150, 1.5, "pomme.jpg");
-$pomme2 = new Fruit(Fruit::POMME,200, 2.0, "pomme2.jpg");
-$cerise1 = new Fruit(Fruit::CERISE,50, 2.0, "cerise.jpg");
-$cerise2 = new Fruit(Fruit::CERISE,30, 2.5, "cerise2.jpg");
+$pomme1 = new Fruit(Fruit::POMME, 150, 1.5, "pomme.jpg");
+$pomme2 = new Fruit(Fruit::POMME, 200, 2.0, "pomme2.jpg");
+$cerise1 = new Fruit(Fruit::CERISE, 50, 2.0, "cerise.jpg");
+$cerise2 = new Fruit(Fruit::CERISE, 30, 2.5, "cerise2.jpg");
 
-// Création de deux paniers
-$panier1 = new Panier();
-$panier2 = new Panier();
+// Création de paniers
+$paniers = array(
+    'panier1' => new Panier(),
+    'panier2' => new Panier(),
+);
 
 // Ajout de fruits aux paniers
-$panier1->ajouterFruit($pomme1);
-$panier1->ajouterFruit($cerise1);
+$paniers['panier1']->ajouterFruit($pomme1);
+$paniers['panier1']->ajouterFruit($cerise1);
 
-$panier2->ajouterFruit($pomme2);
-$panier2->ajouterFruit($cerise2);
-
-
+$paniers['panier2']->ajouterFruit($pomme2);
+$paniers['panier2']->ajouterFruit($cerise2);
 
 // Traitement du formulaire de sélection de panier
 $panierSelectionne = isset($_POST['panier']) ? $_POST['panier'] : '';
-
 
 ?>
 
@@ -47,26 +44,28 @@ $panierSelectionne = isset($_POST['panier']) ? $_POST['panier'] : '';
 </head>
 <body>
 
-
 <!-- Formulaire de sélection de panier -->
 <form method="post" action="">
     <label for="panier">Choisissez un panier :</label>
     <select id="panier" name="panier">
-        <option value="panier1" <?php echo ($panierSelectionne === 'panier1') ? 'selected' : ''; ?>>Panier 1</option>
-        <option value="panier2" <?php echo ($panierSelectionne === 'panier2') ? 'selected' : ''; ?>>Panier 2</option>
+        <?php
+        // Boucle sur les paniers pour générer les options de la liste déroulante
+        foreach ($paniers as $id => $panier) {
+            echo "<option value=\"$id\"";
+            echo ($panierSelectionne === $id) ? ' selected' : '';
+            echo ">$id</option>";
+        }
+        ?>
     </select>
     <button type="submit">Afficher le Panier</button>
 </form>
 
 <?php
 // Afficher le contenu du panier sélectionné
-if ($panierSelectionne === 'panier1') {
-    $panier1->afficherContenu();
-} elseif ($panierSelectionne === 'panier2') {
-    $panier2->afficherContenu();
+if (isset($paniers[$panierSelectionne])) {
+    $paniers[$panierSelectionne]->afficherContenu();
 }
 ?>
-
 
 </body>
 </html>
